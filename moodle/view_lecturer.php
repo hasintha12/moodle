@@ -18,7 +18,7 @@ $conn = new mysqli($server, $username, $password, $database);
 function getBInfo($id, $conn){
 
     //  SQL statement to extract the basic information of the student
-    $sql_basic = "select * from lecturer WHERE lecturer.id='".$id."'";
+    $sql_basic = "select * from lecturer WHERE lecturer.lec_id='".$id."'";
 
     $message = '';
 
@@ -42,7 +42,7 @@ function getBInfo($id, $conn){
 function getModuleInfo($id, $conn){
 
     //  SQL statement to extract the Enrollment information of the student
-    $sql_en = "select module.course_name, module.credit, teaches.module_id, teaches.term, teaches.class_id from module, teaches WHERE teaches.lecturer_id = '".$id."' and module.course_id= teaches.module_id";
+    $sql_en = "select course.name, course.credit, class.course_id, class.class_id from course, class WHERE class.lec_id = '".$id."' and course.course_id= class.course_id";
 
     $message = '';
 
@@ -71,10 +71,9 @@ function showModuleInfo($message, $result_en){
     else{
         if($result_en -> num_rows > 0){
             while($row = $result_en -> fetch_assoc()){
-                echo '<tr><td>'.$row['module_id'].'</td>
-                              <td>'.$row['course_name'].'</td>
+                echo '<tr><td>'.$row['course_id'].'</td>
+                              <td>'.$row['name'].'</td>
                               <td>'.$row['credit'].'</td>
-                              <td>'.$row['term'].'</td>
                               <td>'.$row['class_id'].'</td>
                               </tr>';
                 //print_r($row);
@@ -97,10 +96,12 @@ function showBInfo($message, $result){
             if($result -> num_rows > 0){
                 while($row = $result -> fetch_assoc()){
 
-                    echo '<br>Index no  : '.$row['id'].'
-                                  <br>Name      : '.$row['name'].'
-                                  <br>Department: '.$row['dept_name'].'
-                                  <br>';
+                    echo '<br>Index no   : '.$row['lec_id'].'
+                          <br>Name       : '.$row['name'].'
+                          <br>Department : '.$row['department'].'
+                          <br>Contact no.: '.$row['contact_no'].'
+                          <br>City       : '.$row['city'].'
+                          <br>';
                 }
             }
             else{
@@ -117,7 +118,7 @@ function showBInfo($message, $result){
 <head>
     <meta charset="UTF-8">
     <title>Search lecturers</title>
-    <link href="images/tabimage.jpg" rel="shortcut image" type="image/x-icon">
+    <link href="images/tabimage.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -169,7 +170,6 @@ function showBInfo($message, $result){
                     <th>Module code</th>
                     <th>Module title</th>
                     <th>Credits</th>
-                    <th>Term</th>
                     <th>Class id</th>
                 </tr>
                 </thead>

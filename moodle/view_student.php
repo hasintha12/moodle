@@ -18,7 +18,7 @@
     function getBInfo($id, $conn){
 
         //  SQL statement to extract the basic information of the student
-        $sql_basic = "select * from student WHERE student.id='".$id."'";
+        $sql_basic = "select * from student WHERE st_id='".$id."'";
 
         $message = '';
 
@@ -42,7 +42,8 @@
     function getEnInfo($id, $conn){
 
         //  SQL statement to extract the Enrollment information of the student
-        $sql_en = "select * from module,enrollment WHERE enrollment.student_id = '".$id."' and enrollment.course_id = module.course_id";
+        //$sql_en = "select * from course,enrollment natural join class WHERE enrollment.st_id = '".$id."'";
+        $sql_en = "select * from course where course_id in (select course_id from class where class_id in (select class_id from enrollment where st_id = '".$id."'))";
 
         $message = '';
 
@@ -72,9 +73,9 @@
             if($result_en -> num_rows > 0){
                 while($row = $result_en -> fetch_assoc()){
                     echo '<tr><td>'.$row['course_id'].'</td>
-                              <td>'.$row['course_name'].'</td>
+                              <td>'.$row['name'].'</td>
                               <td>'.$row['credit'].'</td>
-                              <td>'.$row['dept_name'].'</td></tr>';
+                              <td>'.$row['dept_id'].'</td></tr>';
                     $tot_credits += $row['credit'];
                 }
                 echo 'Total credits: '.$tot_credits;
@@ -96,10 +97,12 @@
                 if($result -> num_rows > 0){
                     while($row = $result -> fetch_assoc()){
 
-                        echo '<br>Index no  : '.$row['id'].'
-                                  <br>Name      : '.$row['name'].'
-                                  <br>Department: '.$row['dept_name'].'
-                                  <br>';
+                        echo '<br>Index no   : '.$row['st_id'].'
+                              <br>Name       : '.$row['name'].'
+                              <br>Department : '.$row['department'].'
+                              <br>Contact no.: '.$row['contact_no'].'
+                              <br>NIC        : '.$row['nic'].'
+                              <br>';
                     }
                 }
                 else{
