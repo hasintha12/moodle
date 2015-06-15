@@ -20,7 +20,7 @@ function getEnInfo($conn){
 
     //  SQL statement to extract the Enrollment information of the student
     //$sql_en = "select * from course,enrollment natural join class WHERE enrollment.st_id = '".$id."'";
-    $sql_dep = "select dept_id from department";
+    $sql_dep = "select dept_id, dept_name from department";
 
     $message = '';
 
@@ -49,7 +49,7 @@ function showEnInfo($message, $result_dep, $conn){
     else{
         if($result_dep -> num_rows > 0){
             while($row_dep = $result_dep -> fetch_assoc()){
-                $sql_data = "select * from student where student.department='".$row_dep['dept_id']."'";
+                $sql_data = "select * from student where student.dept_id='".$row_dep['dept_id']."'";
 
                 $message1 = '';
 
@@ -71,26 +71,25 @@ function showEnInfo($message, $result_dep, $conn){
                 ?>
                 <div class="panel-heading">
                         <?php
-                            echo $row_dep['dept_id'];
+                            echo $row_dep['dept_name'];
                         ?>
                 </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <td><B>Student id</B></td>
+                                <td><B>Name</B></td>
+                                <td><B>Contact no.</B></td>
+                                <td><B>Birthday</B></td>
+                                <td><B>NIC</B></td>
+                            </thead>
                 <?php
 
                 while($row_data= $result_data -> fetch_assoc()){
 
                     //-----------------------------------------------
                     ?>
-
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <td>Student id</td>
-                                    <td>Name</td>
-                                    <td>Contact no.</td>
-                                    <td>Birthday</td>
-                                    <td>NIC</td>
-                                </thead>
                                 <tbody>
                                     <?php
                                         echo '<tr><td>'.$row_data['st_id'].'</td>
@@ -101,14 +100,16 @@ function showEnInfo($message, $result_dep, $conn){
                                               </tr>';
                                     ?>
                                 </tbody>
-                            </table>
-                        </div>
-                    </div>
                     <?php
                     //-----------------------------------------------
 
 
                 }
+                ?>
+                        </table>
+                    </div>
+                </div>
+                            <?php
 
             }
 
