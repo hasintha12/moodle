@@ -12,7 +12,7 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/mystyle.css"> 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        
+
 
 
     </head>
@@ -90,9 +90,19 @@ session_start();
                 <div class="col-md-4   ">
                     <div class="rightnav">
                         <div class="panel panel-primary">
-                            <div class="panel-heading"><h3><h3></div>
+                            <div class="panel-heading"><h3>Notice<h3></div>
                                         <div class="panel-body">
-                                            <p> Student enrolment open now!</p> 
+                                            <p> Student enrolments are available now!</p> 
+                                            <table class="table">
+                                                <ul>
+                <li >You are allowed to enroll for a maximum of 20 credits in a given term</li>
+                 <li>The class size for any course module 40 students max.</li>
+                  
+                
+            </ul>
+
+
+                                            </table>
                                         </div>
                                         </div>
                                         </div>
@@ -100,73 +110,20 @@ session_start();
                                         </div>    
 
 
-
+<br>
                                         <aside>
                                             <div class="panel panel-primary">
                                                 <div class="panel-heading">
-                                                    <h1>Student Enrolment</h1>
+                                                    <h1>welcome to new Moodle</h1>
                                                     <br>
-                                                    <p>Courses Available</p></div>
+                                                    <p>for your information</p></div>
                                                 <div class="panel-body">
 
-
-                                                    <div>
-
-                                                        <?php
-                                                        
-                                                        $servername = "localhost";
-                                                        $username = "root";
-                                                        $password = "";
-                                                        $dbname = "moodle";
-
-                                                        //Create connection
-                                                        $conn = mysqli_connect($servername, $username, $password, $dbname);
-                                                        //check connection
-                                                        if (!$conn) {
-
-                                                            die("Connection failed:" . mysqli_connect_error());
-                                                        }
-                                                        $sql = "SELECT course_id,course_name FROM module";
-                                                        $result = mysqli_query($conn, $sql);
-
-                                                        if (mysqli_num_rows($result) > 0) {
-
-                                                            echo '<table class="table table-srtiped"><tr><th>ID</th><th>Course</th><th> </th></tr>'; //table h
-
-
-                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                echo '<tr><td>' . $row["course_id"] . '</td><td>' . $row["course_name"];
-                                                                echo( '</td><td><a href="students.php?id=' . "'" . $row["course_id"] . "'" . '">Enroll</a></td></tr>' );
-                                                            }
-
-                                                            //echo ($_SESSION["user"]);
-                                                        } else {
-                                                            echo "0 results";
-                                                        }
-                                                        mysqli_close($conn);
-                                                        ?>
-                                                        <div>
-                                                            <?php
-                                                            $enrolled = $_GET['id'];
-                                                            if ($enrolled != NULL) {
-                                                                //echo $enrolled;
-
-                                                                $conn = new mysqli('localhost', 'root', '', 'moodle');
-                                                                if ($conn->connect_error) {
-                                                                    die("Connection failed: " . $conn->connect_error);
-                                                                }
-                                                                $sql = "INSERT INTO enrollment (course_id,student_id)VALUES (" . $enrolled . ",'" . $_SESSION["user"] . "')";
-
-                                                                if ($conn->query($sql) === TRUE) {
-                                                                    //  echo "Enrollent successfull";
-                                                                } else {
-                                                                      echo "Error: " . $sql . "<br>" . $conn->error;
-                                                                }
-
-                                                                $conn->close();
-                                                            }
-                                                            ?>
-                                                        </div>
+<h5>Now auto course creation is available with the new Moodle. 
+    When the course module is offered it will be automatically created in new Moodle. 
+    So there is no need to create any course module manually. If you have any problem regarding moodle, contact moodle admins
+</h5>
+                                                    
                                                     </div>
 
 
